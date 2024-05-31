@@ -1,22 +1,12 @@
-name: Snyk test of Docker image
+name: Workflow for Docker using Snyk 
 on: push
-
-env:
-  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-
 jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Snyk Auth
-      run: |
-        snyk auth $SNYK_TOKEN
-
-    - name: Snyk scan
-      run: |
-        snyk container test debian --file=./Dockerfile
-
+    - name: Run Snyk to check Docker image for vulnerabilities
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        image: vulnerables/web-dvwa
