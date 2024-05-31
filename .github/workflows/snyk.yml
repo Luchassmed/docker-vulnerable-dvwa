@@ -4,11 +4,16 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
     - name: Run Snyk to check Docker image for vulnerabilities
       uses: snyk/actions/docker@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        image: Dockerfile
+        image: your/image-to-test
         args: --file=Dockerfile
-      
+        command: test
+        json: false
+        sarif: true
