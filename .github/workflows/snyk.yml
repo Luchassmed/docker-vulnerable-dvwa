@@ -12,4 +12,5 @@ jobs:
       with:
         image: vulnerables/web-dvwa
         args: --severity-threshold=high
+        json: true
         
